@@ -7,7 +7,6 @@ import (
 )
 
 /*************************************************/
-var stream chan string = make(chan string, 1)
 
 type Session struct {
     users map[string]*user
@@ -19,7 +18,7 @@ type user struct{
 }
 /*************************************************/
 func (u user) chat(message string) string{
-    return u.name + " :" + message
+    return u.name + ": " + message
 }
 /*************************************************/
 func newSess() *Session{
@@ -34,8 +33,8 @@ func (s *Session) addUser(name string){
 }
 
 func (s *Session) userChat(message string, name string) {
-    if _, ok := s.users["name"]; ok{
-        stream <- s.users[name].chat(message)
+    if _, ok := s.users[name]; ok{
+        fmt.Println(s.users[name].chat(message))
     }
 }
 
@@ -43,17 +42,9 @@ func (s *Session) userChat(message string, name string) {
 func main(){
     sess := newSess()
     names := [4]string{"sai","tnek","captiosus", "_passion"}
-    for i := range names{
-        sess.addUser(names[i])
-    }
-
     phrases := [4]string{"zippo!", "twits", "tits", "heyooo"}
     for i:=0; i < len(phrases); i++{
         sess.addUser(names[i])
         sess.userChat(phrases[i], names[i])
     }
-
-    msg := <-stream
-    close(stream)
-    fmt.Scanln(msg)
 }
