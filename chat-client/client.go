@@ -1,5 +1,4 @@
-
-ackage main
+package main
 
 import (
 "fmt"
@@ -43,7 +42,7 @@ func (s *Session) userChat(message string, name string) {
 func main(){
     sess := newSess()
     names := [4]string{"sai","tnek","captiosus", "_passion"}
-    phrases := [4]string{"zippo!", "twits", "tits", "heyooo"}
+    phrases := [4]string{"zippo!", "twits", "food", "heyooo"}
     for i:=0; i < len(phrases); i++{
         sess.addUser(names[i])
         sess.userChat(phrases[i], names[i])
